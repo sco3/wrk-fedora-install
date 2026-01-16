@@ -12,3 +12,24 @@ Before building `wrk`, you need to install the necessary development tools and P
 sudo dnf groupinstall "Development Tools"
 sudo dnf install openssl-devel git
 ```
+
+### 2. Test with curl
+
+```
+curl -X POST -H 'Content-Type:application/json' --data '{"message":"hello"}' http://0.0.0.0:9080/api/echo
+```
+
+
+### 3. Test with wrk
+```lua
+-- Set global request parameters
+wrk.method = "POST"
+wrk.body   = '{"message":"hello"}'
+wrk.headers["Content-Type"] = "application/json"
+
+```
+
+the test command
+```
+wrk -t12 -c200 -d6s -s echo-test.lua --latency http://0.0.0.0:9080/api/echo
+```
